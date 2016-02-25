@@ -1,0 +1,40 @@
+<ion-view>
+    <ion-nav-title>Code Delivery - Checkout</ion-nav-title>
+    <div class="bar bar-subheader">
+        <h2 class="title">Total R$ {{total}}</h2>
+        <button class="button button-icon ion-minus-circled" ng-click="showDelete = !showDelete"
+                ng-class="{'button-assertive': showDelete, '': !showDelete}"></button>
+    </div>
+    <ion-content class="padding has-subheader">
+        <ion-list show-delete="showDelete">
+            <ion-item class="item-balanced item-icon-left" ng-show="cupom.value != null">
+                <span class="icon ion-close" ng-click="removeCupom()"></span>
+                <strong>Cupom</strong>
+                <span class="badge badge-balanced">- R$ {{cupom.value}}</span>
+            </ion-item>
+            <ion-item ng-repeat="x in items" ng-click="openProductDetail($index)">
+                <ion-delete-button class="ion ion-minus-circled" ng-click="removeIndex($index)"></ion-delete-button>
+                <h2>{{x.name}}</h2>
+
+                <div class="row">
+                    <div class="col">
+                        Qtd: {{x.qtd}}<br/>
+                        <i class="ion ion-cash">{{x.price}}</i>
+                    </div>
+                    <div class="col">
+                        <i class="ion ion-social-usd">{{x.qtd* x.price}}</i>
+                    </div>
+                </div>
+            </ion-item>
+        </ion-list>
+
+
+        <button type="button" class="button button-balanced button-block" ng-click="readBarCode()"
+                ng-disabled="cupom.value != null">
+            Adicionar Cupom
+        </button>
+
+        <button type="button" class="button button-assertive button-full" ng-click="save()">Salvar</button>
+        <a class="button button-block ion-arrow-left-b" ng-click="voltar()">Voltar</a>
+    </ion-content>
+</ion-view>
