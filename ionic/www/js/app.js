@@ -86,7 +86,7 @@ angular.module('starter', [
         OAuthTokenProvider.configure({
             name: 'token',
             options: {
-                secure: false //Criptografação com HTTPS
+                secure: false //Criptografar com HTTPS
             }
         });
     })
