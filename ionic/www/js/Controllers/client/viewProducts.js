@@ -14,24 +14,17 @@ angular.module('starter.controllers')
                 hideOnStageChange: true
             });
 
-            var product = Product.get({}, function (data) {
+            var product = Product.query({}, function (data) {
                 $scope.products = data.data;
                 console.log(data.data);
                 $ionicLoading.hide();
-
-
-
-                $ionicPopup.alert({
-                    title: 'Advertência1',
-                    template: data.data
-                });
 
             }, function (dataError) {
                 console.log(dataError);
                 $ionicLoading.hide();
 
                 $ionicPopup.alert({
-                    title: 'Advertência2',
+                    title: dataError.data,
                     template: dataError
                 });
             });

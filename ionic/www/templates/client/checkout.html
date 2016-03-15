@@ -1,6 +1,7 @@
 <ion-view>
     <ion-nav-title>Code Delivery - Checkout</ion-nav-title>
     <div class="bar bar-subheader">
+        <button class="button button-icon ion-android-add-circle" ng-click="voltar()"></button>
         <h2 class="title">Total R$ {{total}}</h2>
         <button class="button button-icon ion-minus-circled" ng-click="showDelete = !showDelete"
                 ng-class="{'button-assertive': showDelete, '': !showDelete}"></button>
@@ -35,6 +36,5 @@
         </button>
 
         <button type="button" class="button button-assertive button-full" ng-click="save()">Salvar</button>
-        <a class="button button-block ion-arrow-left-b" ng-click="voltar()">Voltar</a>
     </ion-content>
 </ion-view>

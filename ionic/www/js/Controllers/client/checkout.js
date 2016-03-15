@@ -3,8 +3,10 @@
  */
 angular.module('starter.controllers')
     .controller('ClientCheckoutCtrl', ['$scope', '$state', '$cart', '$localStorage', 'Order',
-        '$ionicLoading', '$ionicPopup', 'Cupom',
-        function ($scope, $state, $cart, $localStorage, Order, $ionicLoading, $ionicPopup, Cupom) {
+        '$ionicLoading', '$ionicPopup', 'Cupom', '$cordovaBarcodeScanner', 'User',
+        function ($scope, $state, $cart, $localStorage, Order, $ionicLoading,
+                  $ionicPopup, Cupom, $cordovaBarcodeScanner, User) {
+
             var cart = $cart.get();
             $scope.showDelete = false;
             $scope.items = cart.items;
@@ -19,7 +21,7 @@ angular.module('starter.controllers')
                 $cart.removeItem(index);
 
                 $scope.items.splice(index, 1);
-                $scope.total = $cart.get().getTotalFinal();
+                $scope.total = $cart.getTotalFinal();
             };
 
             $scope.openProductDetail = function (i) {
@@ -57,7 +59,16 @@ angular.module('starter.controllers')
             };
 
             $scope.readBarCode = function () {
-                getValueCupom(355);
+                $cordovaBarcodeScanner
+                    .scan()
+                    .then(function (barcodeData) {
+                        getValueCupom(barcodeData.text);
+                    }, function (error) {
+                        $ionicPopup.alert({
+                            title: 'Advertência',
+                            template: 'Não foi possível ler o código de barras - Tente novamente'
+                        });
+                    });
             };
 
             $scope.removeCupom = function () {
@@ -72,9 +83,9 @@ angular.module('starter.controllers')
                     hideOnStageChange: true
                 });
 
-                Cupom.get({code: code}, function (data) {
-                    $cart.setCupom(data.data.code, data.data.value);
+                Cupom.query({code: code}, function (data) {
 
+                    $cart.setCupom(data.data.code, data.data.value);
                     $scope.cupom = $cart.get().cupom;
                     $scope.total = $cart.getTotalFinal();
 

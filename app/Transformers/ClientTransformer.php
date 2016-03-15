@@ -26,8 +26,8 @@ class ClientTransformer extends TransformerAbstract
             'id' => (int)$model->id,
             'address' => $model->address,
             'city' => $model->city,
-            /* place your other model properties here */
-
+            'state' => $model->state,
+            'zipcode' => $model->zipcode,
             'created_at' => $model->created_at,
             'updated_at' => $model->updated_at
         ];

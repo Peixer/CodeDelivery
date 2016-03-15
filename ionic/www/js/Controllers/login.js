@@ -15,7 +15,7 @@ angular.module('starter.controllers')
                     .then(function (data) {
                         console.log("Login funcionando");
 
-                        $state.go('client.view_products');
+                        $state.go('client.checkout');
                     }, function (responseError) {
                         $ionicPopup.alert({
                             title: 'Advertência',

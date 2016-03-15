@@ -45,7 +45,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth.checkrole:admin', 'as' 
     Route::get('cupons', ['as' => 'cupons.index', 'uses' => 'CuponsController@index']);
     Route::get('cupons/create', ['as' => 'cupons.create', 'uses' => 'CuponsController@create']);
     Route::post('cupons/store', ['as' => 'cupons.store', 'uses' => 'CuponsController@store']);
-    Route::get('cupons/edit/{id}', ['as' => 'orders.edit', 'uses' => 'CuponsController@edit']);
+    Route::get('cupons/edit/{id}', ['as' => 'cupons.edit', 'uses' => 'CuponsController@edit']);
     Route::post('cupons/update/{id}', ['as' => 'cupons.update', 'uses' => 'CuponsController@update']);
 });
 
@@ -63,10 +63,11 @@ Route::group(['middleware' => 'cors'], function () {
 
     Route::group(['prefix' => 'api', 'middleware' => 'oauth', 'as' => 'api.'], function () {
 
+        Route::get('authenticated', 'API\UserController@authenticated');
         Route::get('cupom/{code}', 'API\CupomController@show');
 
         Route::group(['prefix' => 'client', 'middleware' => 'oauth.checkrole:client', 'as' => 'client.'], function () {
-            Route::resource('order', 'API\Client\ClientCheckoutController', [
+                Route::resource('order', 'API\Client\ClientCheckoutController', [
                 'except' => ['create', 'edit', 'destroy']
             ]);
 
