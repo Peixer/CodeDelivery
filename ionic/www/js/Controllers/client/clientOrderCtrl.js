@@ -2,8 +2,8 @@
  * Created by Glaicon on 01/02/2016.
  */
 angular.module('starter.controllers')
-    .controller('ClientOrderCtrl', ['$scope', '$state', '$ionicLoading', 'Order',
-        function ($scope, $state, $ionicLoading, Order) {
+    .controller('ClientOrderCtrl', ['$scope', '$state', '$ionicLoading', 'ClientOrder',
+        function ($scope, $state, $ionicLoading, ClientOrder) {
 
             $scope.items = [];
 
@@ -26,7 +26,7 @@ angular.module('starter.controllers')
             };
 
             function getOrders() {
-                return Order.query({
+                return ClientOrder.query({
                     id: null,
                     orderBy: 'created_at',
                     sortedBy: 'desc'

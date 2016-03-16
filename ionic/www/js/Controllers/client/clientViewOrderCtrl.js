@@ -2,8 +2,8 @@
  * Created by Glaicon on 01/02/2016.
  */
 angular.module('starter.controllers')
-    .controller('ClientViewOrderCtrl', ['$scope', '$stateParams', 'Order', '$ionicLoading',
-        function ($scope, $stateParams, Order, $ionicLoading) {
+    .controller('ClientViewOrderCtrl', ['$scope', '$stateParams', 'ClientOrder', '$ionicLoading',
+        function ($scope, $stateParams, ClientOrder, $ionicLoading) {
 
             $scope.order = {};
 
@@ -12,7 +12,7 @@ angular.module('starter.controllers')
                     template: 'Carregando...'
                 });
 
-            Order.get({id: $stateParams.id, include: 'items,cupom'},
+            ClientOrder.get({id: $stateParams.id, include: 'items,cupom'},
                 function (data) {
                     $scope.order = data.data;
                     $ionicLoading.hide();

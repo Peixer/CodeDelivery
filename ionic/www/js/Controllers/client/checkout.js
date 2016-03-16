@@ -2,9 +2,10 @@
  * Created by Glaicon on 01/02/2016.
  */
 angular.module('starter.controllers')
-    .controller('ClientCheckoutCtrl', ['$scope', '$state', '$cart', '$localStorage', 'Order',
+    .controller('ClientCheckoutCtrl',
+    ['$scope', '$state', '$cart', '$localStorage', 'ClientOrder',
         '$ionicLoading', '$ionicPopup', 'Cupom', '$cordovaBarcodeScanner', 'User',
-        function ($scope, $state, $cart, $localStorage, Order, $ionicLoading,
+        function ($scope, $state, $cart, $localStorage, ClientOrder, $ionicLoading,
                   $ionicPopup, Cupom, $cordovaBarcodeScanner, User) {
 
             var cart = $cart.get();
@@ -44,7 +45,7 @@ angular.module('starter.controllers')
                     hideOnStageChange: true
                 });
 
-                Order.save({id: null}, o, function (data) {
+                ClientOrder.save({id: null}, o, function (data) {
                     $ionicLoading.hide();
 
                     $state.go('client.checkout_successful');

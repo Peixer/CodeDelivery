@@ -2,23 +2,9 @@
  * Created by Glaicon on 01/02/2016.
  */
 angular.module('starter.controllers')
-    .controller('ClientMenuCtrl', ['$scope', '$ionicLoading', 'User', function ($scope, $ionicLoading, User) {
+    .controller('ClientMenuCtrl',
+    ['$scope', '$ionicLoading', 'UserData',
+        function ($scope, $ionicLoading, UserData) {
 
-        $scope.user = {
-            name: ''
-        };
-
-        $ionicLoading.show(
-            {
-                template: 'Carregando...'
-            });
-
-        User.authenticated({},
-            function (data) {
-                $scope.user = data.data;
-                $ionicLoading.hide();
-            },
-            function (responseError) {
-                $ionicLoading.hide();
-            });
-    }]);
+            $scope.user = UserData.get();
+        }]);
