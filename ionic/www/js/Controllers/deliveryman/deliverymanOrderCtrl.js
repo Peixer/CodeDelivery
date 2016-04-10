@@ -2,7 +2,8 @@
  * Created by Glaicon on 01/02/2016.
  */
 angular.module('starter.controllers')
-    .controller('DeliverymanOrderCtrl', ['$scope', '$state', '$ionicLoading', 'DeliverymanOrder',
+    .controller('DeliverymanOrderCtrl',
+    ['$scope', '$state', '$ionicLoading', 'DeliverymanOrder',
         function ($scope, $state, $ionicLoading, DeliverymanOrder) {
 
             $scope.items = [];

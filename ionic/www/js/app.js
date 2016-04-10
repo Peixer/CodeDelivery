@@ -9,35 +9,44 @@ angular.module('starter.filters', []);
 
 angular.module('starter', [
     'ionic',
+    'ionic.service.core',
     'starter.controllers',
     'starter.filters',
     'starter.services',
     'angular-oauth2',
     'ngResource',
-    'ngCordova'
+    'ngCordova',
+    'uiGmapgoogle-maps',
+    'pusher-angular'
 ])
 
     .constant('appConfig', {
-        //baseUrl: 'http://localhost:8000'
-        baseUrl: 'http://www.peixer.com/Laravel',
+        baseUrl: 'http://localhost:8000',
+        pusherKey: '5603dc5282ed3075cf96' // Pusher.com/
+        //baseUrl: 'http://www.peixer.com/Laravel',
     })
 
-    .run(function ($ionicPlatform) {
+    .run(function ($ionicPlatform, $window, appConfig) {
+        $window.client = new Pusher(appConfig.pusherKey, {});
 
         $ionicPlatform.ready(function () {
             if (window.cordova && window.cordova.plugins.Keyboard) {
-                // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
-                // for form inputs)
                 cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
-
-                // Don't remove this line unless you know what you are doing. It stops the viewport
-                // from snapping when text inputs are focused. Ionic handles this internally for
-                // a much nicer keyboard experience.
                 cordova.plugins.Keyboard.disableScroll(true);
             }
             if (window.StatusBar) {
                 StatusBar.styleDefault();
             }
+
+            Ionic.io();
+
+            var push = new Ionic.Push({
+                "debug": true
+            });
+
+            push.register(function (token) {
+                console.log("Device token:", token.token);
+            });
         });
     })
 
@@ -87,6 +96,11 @@ angular.module('starter', [
                 url: '/view_order/:id',
                 templateUrl: 'templates/client/view_order.html',
                 controller: 'ClientViewOrderCtrl'
+            }).state('client.view_delivery', {
+                cache: false,
+                url: '/view_delivery/:id',
+                templateUrl: 'templates/client/view_delivery.html',
+                controller: 'ClientViewDeliveryCtrl'
             }).state('deliveryman', {
                 // Rota base
                 // Serve para intermediar o fluxo

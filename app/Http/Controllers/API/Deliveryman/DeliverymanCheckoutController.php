@@ -2,6 +2,8 @@
 
 namespace CodeDelivery\Http\Controllers\API\Deliveryman;
 
+use CodeDelivery\Events\GetLocationDeliveryman;
+use CodeDelivery\Models\Geo;
 use CodeDelivery\Repositories\OrderRepository;
 use CodeDelivery\Repositories\ProductRepository;
 use CodeDelivery\Repositories\UserRepository;
@@ -9,6 +11,7 @@ use CodeDelivery\Services\OrderService;
 use CodeDelivery\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use LucaDegasperi\OAuth2Server\Facades\Authorizer;
+
 
 class DeliverymanCheckoutController extends Controller
 {
@@ -28,11 +31,11 @@ class DeliverymanCheckoutController extends Controller
     public function __construct(
         OrderRepository $repository,
         UserRepository $userRepository,
-        ProductRepository $productRepository,
         OrderService $orderService)
     {
         $this->repository = $repository;
         $this->repository->skipPresenter(false);
+
         $this->userRepository = $userRepository;
         $this->orderService = $orderService;
     }
@@ -55,6 +58,7 @@ class DeliverymanCheckoutController extends Controller
     public function show($id)
     {
         $idUser = Authorizer::getResourceOwnerId();
+
         return $this->repository
             ->skipPresenter(false)
             ->getByDeliverymanAndId($id, $idUser);
@@ -63,11 +67,20 @@ class DeliverymanCheckoutController extends Controller
     public function updateStatus(Request $request, $id)
     {
         $idUser = Authorizer::getResourceOwnerId();
-        $order = $this->orderService->updateStatus($id, $idUser, $request->get('status'));
 
-        if ($order)
-            return $order->repository->find($order->id);
+        return $this->orderService->updateStatus($id, $idUser, $request->get('status'));
+    }
 
-        abort(400, "Order não encontrado");
+    public function geo(Request $request, Geo $geo, $id)
+    {
+        $idUser = Authorizer::getResourceOwnerId();
+        $order = $this->repository->getByDeliverymanAndId($id, $idUser);
+
+        $geo->lat = $request->get('lat');
+        $geo->long = $request->get('long');
+
+        event(new GetLocationDeliveryman($geo, $order));
+
+        return $geo;
     }
 }

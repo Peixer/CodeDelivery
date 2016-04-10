@@ -2,8 +2,8 @@
  * Created by Glaicon on 01/02/2016.
  */
 angular.module('starter.controllers')
-    .controller('ClientOrderCtrl', ['$scope', '$state', '$ionicLoading', 'ClientOrder',
-        function ($scope, $state, $ionicLoading, ClientOrder) {
+    .controller('ClientOrderCtrl', ['$scope', '$state', '$ionicLoading', '$ionicActionSheet', 'ClientOrder',
+        function ($scope, $state, $ionicLoading, $ionicActionSheet, ClientOrder) {
 
             $scope.items = [];
 
@@ -24,6 +24,31 @@ angular.module('starter.controllers')
             $scope.openOrderDetail = function (order) {
                 $state.go('client.view_order', {id: order.id});
             };
+
+            $scope.showActionSheet = function (order) {
+                $ionicActionSheet.show({
+                    buttons: [
+                        {text: 'Ver Detalhes'},
+                        {text: 'Ver Entrega'}
+                    ],
+                    titleText: 'O que fazer?',
+                    cancelText: 'Cancelar',
+                    cancel: function () {
+                        // Fazer alguma p/ cancelamento
+                    },
+                    buttonClicked: function (index) {
+                        switch (index) {
+                            case 0:
+                                $state.go('client.view_order', {id: order.id});
+                                break;
+                            case 1:
+                                $state.go('client.view_delivery', {id: order.id});
+                                break;
+                        }
+                    }
+                });
+            };
+
 
             function getOrders() {
                 return ClientOrder.query({

@@ -40,7 +40,7 @@ class CupomRepositoryEloquent extends BaseRepository implements CupomRepository
 
     public function findByCode($code)
     {
-        $result = $this->model->fresh('code', $code)->where('used', 0)->first();
+        $result = $this->model->where('code', $code)->where('used', 0)->first();
 
         if ($result)
             return $this->parserResult($result);

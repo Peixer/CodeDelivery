@@ -4,7 +4,6 @@ namespace CodeDelivery\Transformers;
 
 use CodeDelivery\Models\OrderItem;
 use League\Fractal\TransformerAbstract;
-use CodeDelivery\Models\Order;
 
 /**
  * Class OrderTransformer

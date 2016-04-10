@@ -64,10 +64,11 @@ Route::group(['middleware' => 'cors'], function () {
     Route::group(['prefix' => 'api', 'middleware' => 'oauth', 'as' => 'api.'], function () {
 
         Route::get('authenticated', 'API\UserController@authenticated');
+        Route::patch('device_token', 'API\UserController@updateDeviceToken');
         Route::get('cupom/{code}', 'API\CupomController@show');
 
         Route::group(['prefix' => 'client', 'middleware' => 'oauth.checkrole:client', 'as' => 'client.'], function () {
-                Route::resource('order', 'API\Client\ClientCheckoutController', [
+            Route::resource('order', 'API\Client\ClientCheckoutController', [
                 'except' => ['create', 'edit', 'destroy']
             ]);
 
@@ -79,9 +80,15 @@ Route::group(['middleware' => 'cors'], function () {
                 'except' => ['create', 'edit', 'destroy', 'store']
             ]);
 
-            Route::patch('order/update/{id}', [
+            Route::patch('order/{id}/update-status', [
                 'uses' => 'API\Deliveryman\DeliverymanCheckoutController@updateStatus',
                 'as' => 'orders.update']);
+
+            Route::post('order/{id}/geo', [
+                'as' => 'orders.geo',
+                'uses' => 'API\Deliveryman\DeliverymanCheckoutController@geo'
+            ]);
+
         });
     });
 });

@@ -13,7 +13,8 @@
         "illuminate/html": "^5.0@dev",
         "lucadegasperi/oauth2-server-laravel": "5.0.*",
         "league/fractal": "^0.13.0",
-        "barryvdh/laravel-cors": "0.7.x"
+        "barryvdh/laravel-cors": "0.7.x",
+        "pusher/pusher-php-server": "^2.3"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
