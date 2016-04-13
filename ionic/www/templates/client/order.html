@@ -3,7 +3,7 @@
     <ion-content class="padding has-header">
         <ion-refresher pulling-text="Puxe para atualizar..." on-refresh="doRefresh()"></ion-refresher>
         <ion-list>
-            <ion-item ng-repeat="o in items" ng-click="openOrderDetail(o)" on-hold="showActionSheet(o)">
+            <ion-item collection-repeat="o in items" ng-click="openOrderDetail(o)" on-hold="showActionSheet(o)">
                 <div class="row">
                     <div class="col">
                         <h2>{{o.created_at.date | limitTo: 10 | date: 'dd/MM/yyyy'}}</h2>
@@ -15,7 +15,10 @@
                         <i class="ion ion-social-usd"> {{o.total}}</i>
                     </div>
                 </div>
+
+                <ion-option-button class="button-balanced">Compartilhar</ion-option-button>
             </ion-item>
         </ion-list>
+        <ion-infinite-scroll ng-if="canMoreItems" on-infinite="loadMore()" distance="1%"></ion-infinite-scroll>
     </ion-content>
 </ion-view>

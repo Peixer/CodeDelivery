@@ -22,7 +22,11 @@ angular.module('starter', [
 
     .constant('appConfig', {
         baseUrl: 'http://localhost:8000',
-        pusherKey: '5603dc5282ed3075cf96' // Pusher.com/
+        pusherKey: '5603dc5282ed3075cf96', // Pusher.com/
+        redirectAfterLogin: {
+            client: 'client.order',
+            delivery: 'deliveryman.order'
+        }
         //baseUrl: 'http://www.peixer.com/Laravel',
     })
 
@@ -59,6 +63,9 @@ angular.module('starter', [
                 url: '/login',
                 templateUrl: 'templates/login.html',
                 controller: 'LoginCtrl'
+            }).state('logout', {
+                url: '/logout',
+                controller: 'LogoutCtrl'
             }).state('home', {
                 url: '/home',
                 templateUrl: 'templates/home.html'

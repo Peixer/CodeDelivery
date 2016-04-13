@@ -4,16 +4,17 @@
 angular.module('starter.controllers')
     .controller('ClientOrderCtrl', ['$scope', '$state', '$ionicLoading', '$ionicActionSheet', 'ClientOrder',
         function ($scope, $state, $ionicLoading, $ionicActionSheet, ClientOrder) {
-
+            var page = 1;
             $scope.items = [];
+            $scope.canMoreItems = true;
 
-            $ionicLoading.show(
-                {
-                    template: 'Carregando...'
-                });
+            /* $ionicLoading.show(
+             {
+             template: 'Carregando...'
+             });*/
 
             $scope.doRefresh = function () {
-                getOrders().then(function (data) {
+                getOrders(1).then(function (data) {
                     $scope.items = data.data;
                     $scope.$broadcast('scroll.refreshComplete');
                 }, function (data) {
@@ -49,23 +50,36 @@ angular.module('starter.controllers')
                 });
             };
 
-
-            function getOrders() {
+            function getOrders(pagination) {
                 return ClientOrder.query({
                     id: null,
+                    page: pagination,
                     orderBy: 'created_at',
                     sortedBy: 'desc'
                 }).$promise;
             };
 
-            getOrders().then(
-                function (data) {
-                    $scope.items = data.data;
-                    $ionicLoading.hide();
-                },
-                function (responseError) {
-                    $ionicLoading.hide();
-                }
-            );
+            /*getOrders().then(
+             function (data) {
+             $scope.items = data.data;
+             $ionicLoading.hide();
+             },
+             function (responseError) {
+             $ionicLoading.hide();
+             }
+             );*/
+
+            $scope.loadMore = function () {
+
+                getOrders(page).then(function (data) {
+                    $scope.items = $scope.items.concat(data.data);
+                    if ($scope.items.length == data.meta.pagination.total) {
+                        $scope.canMoreItems = false;
+                    }
+
+                    page += 1;
+                    $scope.$broadcast('scroll.infiniteScrollComplete');
+                });
+            };
 
         }]);
