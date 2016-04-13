@@ -3,8 +3,8 @@
  */
 angular.module('starter.controllers')
     .controller('LoginCtrl', [
-        '$scope', 'OAuth', 'OAuthToken', '$ionicPopup', '$state', 'UserData', 'User',
-        function ($scope, OAuth, OAuthToken, $ionicPopup, $state, UserData, User) {
+        '$scope', 'OAuth', 'OAuthToken', '$ionicPopup', '$state', 'UserData', 'User', '$localStorage',
+        function ($scope, OAuth, OAuthToken, $ionicPopup, $state, UserData, User, $localStorage) {
 
             $scope.user = {
                 username: '',
@@ -14,6 +14,9 @@ angular.module('starter.controllers')
             $scope.login = function () {
                 var promiseAccessToken = OAuth.getAccessToken($scope.user);
                 promiseAccessToken.then(function (data) {
+                    return User.updateDeviceToken({},
+                        {device_token: $localStorage.get('device_token')}).$promise;
+                }).then(function (data) {
                     return User.authenticated({include: 'client'}).$promise;
                 }).then(function (data) {
                     UserData.set(data.data);

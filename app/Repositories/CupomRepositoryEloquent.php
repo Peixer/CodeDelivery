@@ -45,6 +45,6 @@ class CupomRepositoryEloquent extends BaseRepository implements CupomRepository
         if ($result)
             return $this->parserResult($result);
 
-        throw (new ModelNotFoundException)->setModel(get_class($this->model));
+        throw (new ModelNotFoundException)->setModel($this->model());
     }
 }

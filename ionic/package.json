@@ -39,9 +39,6 @@
     }
   ],
   "cordovaPlatforms": [
-    {
-      "platform": "android",
-      "locator": "wp8"
-    }
+    "android"
   ]
 }

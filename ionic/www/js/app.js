@@ -26,7 +26,7 @@ angular.module('starter', [
         //baseUrl: 'http://www.peixer.com/Laravel',
     })
 
-    .run(function ($ionicPlatform, $window, appConfig) {
+    .run(function ($ionicPlatform, $window, appConfig, $localStorage) {
         $window.client = new Pusher(appConfig.pusherKey, {});
 
         $ionicPlatform.ready(function () {
@@ -45,7 +45,7 @@ angular.module('starter', [
             });
 
             push.register(function (token) {
-                console.log("Device token:", token.token);
+                $localStorage.set('device_token', token.token);
             });
         });
     })
