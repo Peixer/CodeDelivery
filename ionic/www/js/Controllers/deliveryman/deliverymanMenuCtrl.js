@@ -7,6 +7,7 @@ angular.module('starter.controllers')
         function ($scope, $ionicLoading, UserData, $state) {
 
             $scope.user = UserData.get();
+
             $scope.logout = function () {
                 $state.go('logout');
             };

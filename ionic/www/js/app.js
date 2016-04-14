@@ -6,6 +6,7 @@
 angular.module('starter.controllers', []);
 angular.module('starter.services', []);
 angular.module('starter.filters', []);
+angular.module('starter.run', []);
 
 angular.module('starter', [
     'ionic',
@@ -13,13 +14,14 @@ angular.module('starter', [
     'starter.controllers',
     'starter.filters',
     'starter.services',
+    'starter.run',
     'angular-oauth2',
     'ngResource',
     'ngCordova',
     'uiGmapgoogle-maps',
-    'pusher-angular'
+    'pusher-angular',
+    'permission'
 ])
-
     .constant('appConfig', {
         baseUrl: 'http://localhost:8000',
         pusherKey: '5603dc5282ed3075cf96', // Pusher.com/
@@ -65,10 +67,12 @@ angular.module('starter', [
                 controller: 'LoginCtrl'
             }).state('logout', {
                 url: '/logout',
-                controller: 'LogoutCtrl'
-            }).state('home', {
-                url: '/home',
-                templateUrl: 'templates/home.html'
+                controller: 'LogoutCtrl',
+                data: {
+                    permissions: {
+                        only: ['user-permission']
+                    }
+                }
             }).state('client', {
                 // Rota base
                 // Serve para intermediar o fluxo
@@ -77,6 +81,11 @@ angular.module('starter', [
                 url: '/client',
                 templateUrl: 'templates/client/menu.html',
                 controller: 'ClientMenuCtrl',
+                data: {
+                    permissions: {
+                        only: ['client-role']
+                    }
+                }
             }).state('client.checkout', {
                 url: '/checkout',
                 templateUrl: 'templates/client/checkout.html',
@@ -116,6 +125,11 @@ angular.module('starter', [
                 url: '/deliveryman',
                 templateUrl: 'templates/deliveryman/menu.html',
                 controller: 'DeliverymanMenuCtrl',
+                data: {
+                    permissions: {
+                        only: ['deliveryman-role']
+                    }
+                }
             }).state('deliveryman.order', {
                 url: '/order',
                 templateUrl: 'templates/deliveryman/order.html',
