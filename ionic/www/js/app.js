@@ -20,16 +20,17 @@ angular.module('starter', [
     'ngCordova',
     'uiGmapgoogle-maps',
     'pusher-angular',
-    'permission'
+    'permission',
+    'http-auth-interceptor'
 ])
     .constant('appConfig', {
-        baseUrl: 'http://localhost:8000',
+        //baseUrl: 'http://localhost:8000',
+        baseUrl: 'http://www.peixer.com/Laravel',
         pusherKey: '5603dc5282ed3075cf96', // Pusher.com/
         redirectAfterLogin: {
             client: 'client.order',
             delivery: 'deliveryman.order'
         }
-        //baseUrl: 'http://www.peixer.com/Laravel',
     })
 
     .run(function ($ionicPlatform, $window, appConfig, $localStorage) {
@@ -185,6 +186,12 @@ angular.module('starter', [
                     writable: true
                 }
             });
+
+            return $delegate;
+        }]);
+
+        $provide.decorator('oauthInterceptor', ['$delegate', function ($delegate) {
+            delete $delegate['responseError']
 
             return $delegate;
         }]);

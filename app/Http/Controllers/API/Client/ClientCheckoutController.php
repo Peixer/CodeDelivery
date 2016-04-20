@@ -2,6 +2,7 @@
 
 namespace CodeDelivery\Http\Controllers\API\Client;
 
+use CodeDelivery\Models\Order;
 use CodeDelivery\Repositories\OrderRepository;
 use CodeDelivery\Repositories\ProductRepository;
 use CodeDelivery\Repositories\UserRepository;
@@ -54,7 +55,7 @@ class ClientCheckoutController extends Controller
 
         return $this->repository
             ->skipPresenter(false)
-            ->getByIdAndClient($id, $idClient);
+            ->getByIdAndClient($id, $idClient, true);
     }
 
     public function store(Request $request)

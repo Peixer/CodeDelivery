@@ -94,7 +94,7 @@ class OrderService
 
     public function updateStatus($id, $idDeliveryman, $status)
     {
-        $order = $this->orderRepository->getByDeliverymanAndId($id, $idDeliveryman);
+        $order = $this->orderRepository->getByDeliverymanAndId($id, $idDeliveryman, true);
         $order->status = $status;
 
         switch ((int)$status) {

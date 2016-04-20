@@ -15,15 +15,17 @@ class OrderRepositoryEloquent extends BaseRepository implements OrderRepository
 {
     protected $skipPresenter = true;
 
-    public function getByDeliverymanAndId($id, $idDeliveryman)
+    public function getByDeliverymanAndId($id, $idDeliveryman, $deveTerParserResult)
     {
         $result = $this->model
             ->where('id', $id)
             ->where('user_deliveryman_id', $idDeliveryman)
             ->first();
 
-        if ($result)
+        if ($result && $deveTerParserResult)
             return $this->parserResult($result);
+        else if ($result)
+            return $result;
 
         throw (new ModelNotFoundException())->setModel($this->model());
     }
@@ -51,15 +53,17 @@ class OrderRepositoryEloquent extends BaseRepository implements OrderRepository
         return \CodeDelivery\Presenters\OrderPresenter::class;
     }
 
-    public function getByIdAndClient($id, $idClient)
+    public function getByIdAndClient($id, $idClient, $deveTerParserResult)
     {
         $result = $this->model
             ->where('id', $id)
             ->where('client_id', $idClient)
             ->first();
 
-        if ($result)
+        if ($result && $deveTerParserResult)
             return $this->parserResult($result);
+        else if ($result)
+            return $result;
 
         throw (new ModelNotFoundException())->setModel($this->model());
     }
