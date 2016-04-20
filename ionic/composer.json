@@ -1,0 +1,5 @@
+{
+    "require": {
+        "dmitrovskiy/ionic-push-php": "^0.0.2"
+    }
+}
