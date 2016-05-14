@@ -10,6 +10,10 @@
 |
 */
 
+Route::get('/', function () {
+    return view('app');
+});
+
 Route::get('home', ['as' => 'home', function () {
     return view('app');
 }]);
