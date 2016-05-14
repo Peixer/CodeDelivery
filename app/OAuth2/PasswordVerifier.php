@@ -15,7 +15,7 @@ class PasswordVerifier
         ];
 
         if (Auth::once($credentials)) {
-            return Auth::user()->client()->id;
+            return Auth::user()->id;
         }
 
         return false;
