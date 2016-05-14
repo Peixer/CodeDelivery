@@ -28,7 +28,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">CodeDelivery</a>
+            <a class="navbar-brand" href="{{ url('/home')  }}">CodeDelivery</a>
         </div>
 
         <div class="collapse navbar-collapse" id="navbar">
@@ -50,9 +50,6 @@
                 @if(auth()->guest())
                     @if(!Request::is('auth/login'))
                         <li><a href="{{ url('/auth/login') }}">Login</a></li>
-                    @endif
-                    @if(!Request::is('auth/register'))
-                        <li><a href="{{ url('/auth/register') }}">Register</a></li>
                     @endif
                 @else
                     <li class="dropdown">

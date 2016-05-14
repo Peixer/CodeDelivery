@@ -10,9 +10,9 @@
 |
 */
 
-Route::get('/', function () {
+Route::get('home', ['as' => 'home', function () {
     return view('app');
-});
+}]);
 
 Route::group(['prefix' => 'admin', 'middleware' => 'auth.checkrole:admin', 'as' => 'admin.'], function () {
     Route::get('category', ['as' => 'category.index', 'uses' => 'CategoriesController@index']);
@@ -92,9 +92,3 @@ Route::group(['middleware' => 'cors'], function () {
         });
     });
 });
-
-
-/*Route::get('test', function () {
-    $repository = app()->make('CodeDelivery\Repositories\CategoryRepository');
-    return $repository->all();
-});*/
