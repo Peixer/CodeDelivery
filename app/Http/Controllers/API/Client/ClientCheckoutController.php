@@ -51,11 +51,12 @@ class ClientCheckoutController extends Controller
 
     public function show($id)
     {
-        $idClient = Authorizer::getResourceOwnerId();
+        $userId = Authorizer::getResourceOwnerId();
+        $clientId = $this->userRepository->find($userId)->client->id;
 
         return $this->repository
             ->skipPresenter(false)
-            ->getByIdAndClient($id, $idClient, true);
+            ->getByIdAndClient($id, $clientId, true);
     }
 
     public function store(Request $request)
