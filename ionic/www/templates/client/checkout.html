@@ -17,13 +17,13 @@
                 <ion-delete-button class="ion ion-minus-circled" ng-click="removeIndex($index)"></ion-delete-button>
                 <h2>{{x.name}}</h2>
 
-                <div class="row">
+               <div class="row">
                     <div class="col">
                         Qtd: {{x.qtd}}<br/>
-                        <i class="ion ion-cash">{{x.price}}</i>
+                         <i class="ion ion-cash"></i> {{x.price}}
                     </div>
-                    <div class="col">
-                        <i class="ion ion-social-usd">{{x.qtd* x.price}}</i>
+                    <div> 
+                        <i class="ion ion-social-usd"></i> {{x.qtd* x.price}}
                     </div>
                 </div>
             </ion-item>
